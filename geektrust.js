@@ -1,4 +1,5 @@
 /*global process*/
+/* eslint no-console: "error" */
 const fs = require("fs");
 const filename = process.argv[2];
 
