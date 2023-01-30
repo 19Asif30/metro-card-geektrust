@@ -1,24 +1,21 @@
+/*global process*/
 const fs = require("fs");
-
 const filename = process.argv[2];
 
 fs.readFile(filename, "utf8", (err, data) => {
   if (err) throw err;
   var list = data.toString().split("\n");
   // Add your code here to process input commands
-
   for (let i = 0; i < list.length; i++) {
     if (list[i].includes("\r")) {
       list[i] = list[i].replace("\r", "");
     }
   }
-
   const type_charges = {
     ADULT: 200,
     SENIOR_CITIZEN: 100,
     KID: 50,
   };
-
   const balance_details = {};
   const checkin_details = {};
   let second_journey = [];
@@ -51,6 +48,7 @@ fs.readFile(filename, "utf8", (err, data) => {
     let origin = prop[2];
     let charge_amount = type_charges[type];
     let disc = 0;
+    let bal_amount = balance_details[id];
     if (second_journey.includes(id)) {
       disc = charge_amount / 2;
       charge_amount = disc;
@@ -58,9 +56,6 @@ fs.readFile(filename, "utf8", (err, data) => {
     } else if (!second_journey.includes(id)) {
       second_journey.push(id);
     }
-    let bal_amount = balance_details[id];
-    let deduct_amount = 0;
-
     if (bal_amount < charge_amount) {
       let rem = charge_amount - bal_amount;
       let spare = (rem * 2) / 100;
